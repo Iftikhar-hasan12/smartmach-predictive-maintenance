@@ -13,22 +13,20 @@ def mse(y_true, y_pred):
 @tf.keras.utils.register_keras_serializable()
 def mae(y_true, y_pred):
     return tf.reduce_mean(tf.abs(y_true - y_pred))
-#----------------------------Model loading------------------------------
+
 def load_data():
     """Load train and test data"""
     train_df = pd.read_csv("data/train_data.csv")
     test_df = pd.read_csv("data/test_data.csv")
     return train_df, test_df
+
 def load_model(model_path):
-    """Load model with graceful fallback"""
-    try:
-        # Try to load TensorFlow model
-        from tensorflow.keras.models import load_model as keras_load_model
-        return keras_load_model(model_path)
-    except:
-        print("TensorFlow not available - Demo Mode")
-        return None
-        #---------------------------------------------------
+    """Load the trained LSTM model with custom objects"""
+    custom_objects = {
+        'mse': mse,
+        'mae': mae
+    }
+    return keras_load_model(model_path, custom_objects=custom_objects)
 
 def scale_data(train_df, test_df):
     """Scale the data using MinMaxScaler"""
