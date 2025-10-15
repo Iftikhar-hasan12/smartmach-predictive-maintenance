@@ -46,14 +46,6 @@ if 'model' not in st.session_state or 'test_df' not in st.session_state:
         st.session_state.model = None
         st.session_state.test_df = None
 
-
-
-# ✅ ADD THIS NEW CHECK (DON'T REPLACE ANYTHING ABOVE)
-if st.session_state.model is None:
-    st.sidebar.warning("🤖 AI Model: Demo Mode (TensorFlow not available)")
-else:
-    st.sidebar.success("🤖 AI Model: Loaded")
-
 # -----------------------------------------Sensor to Readable Name mapping------------
 sensor_thresholds = {
     'sensor_2': (0.1, 0.9), 'sensor_3': (0.1, 0.8), 'sensor_4': (0.2, 0.7),
